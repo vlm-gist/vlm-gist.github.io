@@ -1,0 +1,6 @@
+@inproceedings{author2024project,
+  title={Title of the Paper or Project},
+  author={Author, First and Author, Second and Author, Third},
+  booktitle={Name of the Conference},
+  year={2024}
+}
