@@ -1,6 +1,6 @@
-@inproceedings{author2024project,
-  title={Title of the Paper or Project},
-  author={Author, First and Author, Second and Author, Third},
-  booktitle={Name of the Conference},
-  year={2024}
+@article{paetzold25detector,
+    author={Bastian P{\"a}tzold and Jan Nogga and Sven Behnke},
+    title={Leveraging Vision-Language Models for Open-Vocabulary Instance Segmentation and Tracking},
+    journal={arXiv preprint arXiv:2503.16538},
+    year={2025}
 }
