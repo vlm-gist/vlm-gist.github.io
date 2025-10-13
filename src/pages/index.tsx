@@ -60,14 +60,13 @@ const IndexPage: React.FC<PageProps> = () => {
                     <LinkGroup arxivUrl={"https://arxiv.org/abs/2503.16538"} pdfUrl={"https://www.arxiv.org/pdf/2503.16538"} otherUrls={
                         [
                             ["/bibtex.txt", "BibTex"],
-                            ["https://github.com/AIS-Bonn", "Code"]
+                            ["https://github.com/AIS-Bonn/vlm_gist", "Code"]
                         ]}
                     />
                     
                     {/* Abstract */}
                     <Abstract>
-                    Vision-language models (VLMs) excel in visual understanding but often lack reliable grounding capabilities and ac-
-                    tionable inference rates. Integrating them with open-vocabulary
+                    Vision-language models (VLMs) excel in visual understanding but often lack reliable grounding capabilities and actionable inference rates. Integrating them with open-vocabulary
                     object detection (OVD), instance segmentation, and tracking
                     leverages their strengths while mitigating these drawbacks. We
                     utilize VLM-generated structured descriptions to identify visible object instances, collect application-relevant attributes, and
