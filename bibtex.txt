@@ -1,6 +1,9 @@
-@article{paetzold25detector,
+@article{paetzold25vlmgist,
     author={Bastian P{\"a}tzold and Jan Nogga and Sven Behnke},
     title={Leveraging Vision-Language Models for Open-Vocabulary Instance Segmentation and Tracking},
-    journal={arXiv preprint arXiv:2503.16538},
+    journal={IEEE Robotics and Automation Letters (RA-L)},
+    volume={10},
+    number={11},
+    pages={11578-11585},
     year={2025}
 }
