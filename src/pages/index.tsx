@@ -32,7 +32,7 @@ const IndexPage: React.FC<PageProps> = () => {
             <main className="">
                 {/* Work-in-progress note */}
                 <div className="sticky top-0 z-50 bg-yellow-100 border-b border-yellow-300 text-yellow-800 text-center px-4 py-2 shadow-md">
-                    🚧 🚜 This project page is a <strong>work in progress</strong> before final publication 🚜 🚧
+                    🚜 🚧 This project page is a <strong>work in progress</strong> before final publication 🚧 🚜
                 </div>
 
                 <Article>
