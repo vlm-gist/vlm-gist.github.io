@@ -3,6 +3,7 @@ import Carousel from "react-multi-carousel";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "react-multi-carousel/lib/styles.css";
 import { useTextColors } from "./ColorContext";
+import SubHeading from "./SubHeading";
 
 interface CarouselItemData {
   video?: string;
@@ -13,22 +14,33 @@ interface CarouselItemData {
 interface CarouselComponentProps {
   heading: string;
   items: CarouselItemData[];
+  // How many items are visible at once on desktop/tablet (default 2). Use 1 for
+  // a single, larger item (e.g. long videos shown one at a time).
+  itemsPerView?: number;
+  // When true, videos render with native controls and audio enabled instead of
+  // the default muted-autoplay-loop behavior used for the short grasping clips.
+  videoControls?: boolean;
 }
 
-const CarouselComponent: React.FC<CarouselComponentProps> = ({ heading, items }) => {
+const CarouselComponent: React.FC<CarouselComponentProps> = ({
+  heading,
+  items,
+  itemsPerView = 2,
+  videoControls = false,
+}) => {
   const carouselRef = useRef<any>(null);
   const [mounted, setMounted] = useState(false);              // ⟵ avoid SSR hydration funkiness
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [visibleItems, setVisibleItems] = useState(2);
-  const { textColor, linkColor } = useTextColors();
+  const [visibleItems, setVisibleItems] = useState(itemsPerView);
+  const { linkColor } = useTextColors();
 
   const totalItems = items.length;
 
   const carouselResponsive = useMemo(() => ({
-    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 2 },
-    tablet:  { breakpoint: { max: 1024, min: 464 }, items: 2 },
+    desktop: { breakpoint: { max: 3000, min: 1024 }, items: itemsPerView },
+    tablet:  { breakpoint: { max: 1024, min: 464 }, items: itemsPerView },
     mobile:  { breakpoint: { max: 464,  min: 0   }, items: 1 },
-  }), []);
+  }), [itemsPerView]);
 
   const updateVisibleItems = () => {
     const w = typeof window !== "undefined" ? window.innerWidth : 1024;
@@ -52,9 +64,7 @@ const CarouselComponent: React.FC<CarouselComponentProps> = ({ heading, items })
   return (
     <div className="carousel-container">
       <div className="flex justify-between items-center mt-12">
-        <div className="flex justify-left text-3xl" style={{ color: textColor }}>
-          {heading}
-        </div>
+        <SubHeading className="flex justify-left">{heading}</SubHeading>
 
         <nav className="space-x-4">
           <button
@@ -109,7 +119,7 @@ const CarouselComponent: React.FC<CarouselComponentProps> = ({ heading, items })
               itemClass="px-2"                   // your spacing
             >
               {items.map((item, idx) => (
-                <CarouselItem key={idx} video={item.video} image={item.image}>
+                <CarouselItem key={idx} video={item.video} image={item.image} videoControls={videoControls}>
                   {item.label}
                 </CarouselItem>
               ))}
@@ -124,19 +134,33 @@ const CarouselComponent: React.FC<CarouselComponentProps> = ({ heading, items })
 const CarouselItem: React.FC<{
   video?: string;
   image?: string;
+  videoControls?: boolean;
   children: React.ReactNode;
-}> = ({ video, image, children }) => {
+}> = ({ video, image, videoControls = false, children }) => {
   return (
     <div className="carousel-item">
       {video ? (
-        <video
-          className="carousel-video rounded-lg w-full aspect-video object-cover"
-          src={video}
-          loop
-          muted
-          playsInline
-          autoPlay
-        />
+        videoControls ? (
+          // Larger single videos: native controls + audio, no autoplay. A
+          // distinct class keeps the muted-autoplay handler from touching these.
+          <video
+            className="carousel-video-controls rounded-lg w-full aspect-video object-contain bg-black"
+            src={video}
+            controls
+            loop
+            playsInline
+            preload="metadata"
+          />
+        ) : (
+          <video
+            className="carousel-video rounded-lg w-full aspect-video object-cover"
+            src={video}
+            loop
+            muted
+            playsInline
+            autoPlay
+          />
+        )
       ) : image ? (
         <img
           className="rounded-lg w-full aspect-video object-cover"
